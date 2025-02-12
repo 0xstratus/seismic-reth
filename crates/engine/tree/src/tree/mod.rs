@@ -1216,11 +1216,10 @@ where
     }
 
     fn advance_backup(&mut self) -> Result<(), AdvancePersistenceError> {
-        debug!(target: "engine::tree", "advance_backup called");
+        trace!(target: "engine::tree", "advance_backup called");
         if !self.backup.in_progress() {
-            debug!(target: "engine::tree", "checking if we should backup");
             if self.should_backup() {
-                debug!(target: "engine::tree", "sending backup action");
+                trace!(target: "engine::tree", "sending backup action");
                 let (tx, rx) = oneshot::channel();
                 let _ = self.backup.sender.send(BackupAction::BackupAtBlock(
                     self.persistence_state.last_persisted_block,
@@ -1550,7 +1549,7 @@ where
     /// block is greater than or equal to the backup threshold and
     /// backfill is not running.
     fn should_backup(&self) -> bool {
-        debug!(target: "engine::tree", "checking if we should backup");
+        trace!(target: "engine::tree", "checking if we should backup");
         if !self.backfill_sync_state.is_idle() {
             // can't backup if backfill is running
             return false

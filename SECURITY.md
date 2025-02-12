@@ -2,4 +2,4 @@
 
 ## Report a Vulnerability
 
-Contact [security@ithaca.xyz](mailto:security@ithaca.xyz).
+Contact [p@seismic.systems](mailto:p@seismic.systems), [l@seismic.systems](mailto:l@seismic.systems)
