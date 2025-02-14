@@ -42,7 +42,6 @@ impl SeismicRethTestCommand {
             .arg("--dev")
             .arg("--dev.block-max-transactions")
             .arg("1")
-            .arg("--tee.mock-server")
             .arg("-vvvv")
             .current_dir(workspace_root)
             .stdout(Stdio::piped())
