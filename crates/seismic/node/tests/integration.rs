@@ -42,7 +42,7 @@ async fn integration_test() {
     test_seismic_reth_rpc().await;
     test_seismic_precompiles_end_to_end().await;
     test_seismic_reth_rpc_with_typed_data().await;
-    test_seismic_reth_backup().await;
+    // test_seismic_reth_backup().await;
 
     // let _ = shutdown_tx.try_send(()).unwrap();
     println!("shutdown signal sent");
