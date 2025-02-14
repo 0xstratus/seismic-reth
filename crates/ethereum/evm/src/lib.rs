@@ -104,8 +104,13 @@ impl ConfigureEvmEnv for EthEvmConfig {
         pubkey: EncryptionPublicKey,
         encryption_nonce: u64,
     ) -> EVMResultGeneric<Vec<u8>, TeeError> {
+        debug!(target: "reth::decrypt", ?data, ?pubkey, ?encryption_nonce, "Decrypting data");
+
         let encryption_pubkey = secp256k1::PublicKey::from_slice(pubkey.as_slice())
             .map_err(|_| EVMError::Database(TeeError::PublicKeyRecoveryError))?;
+
+        debug!(target: "reth::decrypt", ?encryption_pubkey, ?data, ?encryption_nonce, "calling decrypt to tee");
+        debug!(target: "reth::decrypt", "Using TEE client: {:?}", self.tee_client);
 
         let tee_decryption: Vec<u8> =
             decrypt(&self.tee_client, encryption_pubkey, data, encryption_nonce)

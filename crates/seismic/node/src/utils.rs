@@ -42,6 +42,8 @@ impl SeismicRethTestCommand {
             .arg("--dev")
             .arg("--dev.block-max-transactions")
             .arg("1")
+            .arg("--tee.endpoint-addr")
+            .arg("48.211.212.30")
             .arg("-vvvv")
             .current_dir(workspace_root)
             .stdout(Stdio::piped())

@@ -21,6 +21,7 @@ use seismic_enclave::{
     },
 };
 use tokio::runtime::{Handle, Runtime};
+use tracing::debug;
 
 /// Custom error type for reth error handling.
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Display)]
@@ -67,13 +68,17 @@ pub fn decrypt<T: TeeAPI>(
     data: Vec<u8>,
     nonce: u64,
 ) -> Result<Vec<u8>, TeeError> {
+    debug!(target: "tee::decrypt", ?data, ?key, ?nonce, "calling decrypt to tee");
+
     if data.len() == 0 {
         return Ok(data)
     }
     let payload = IoDecryptionRequest { key, data, nonce: Nonce::from(nonce) };
+    debug!(target: "tee::decrypt", payload = ?serde_json::to_string(&payload).unwrap(), "payload");
     let IoDecryptionResponse { decrypted_data } =
         block_on_with_runtime(tee_client.tx_io_decrypt(payload))
             .map_err(|_| TeeError::DecryptionError)?;
+    debug!(target: "tee::decrypt", ?decrypted_data, "decrypted_data");
     Ok(decrypted_data)
 }
 

@@ -865,6 +865,7 @@ pub trait Call:
         let input =
             input.try_into_unique_input().map_err(Self::Error::from_eth_err)?.unwrap_or_default();
 
+        debug!(target: "rpc::eth::call", ?input, "debugging input: {:?}", input);
         let input = if transaction_type == Some(alloy_consensus::TxSeismic::TX_TYPE) &&
             input.len() > 0
         {
